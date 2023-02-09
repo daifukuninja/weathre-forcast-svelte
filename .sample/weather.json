@@ -1,0 +1,46 @@
+{
+    "coord": {
+        "lon": 140.3988,
+        "lat": 36.402
+    },
+    "weather": [
+        {
+            "id": 803,
+            "main": "Clouds",
+            "description": "broken clouds",
+            "icon": "04d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 285.79,
+        "feels_like": 284.49,
+        "temp_min": 285.79,
+        "temp_max": 285.79,
+        "pressure": 1020,
+        "humidity": 53,
+        "sea_level": 1020,
+        "grnd_level": 1014
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.3,
+        "deg": 34,
+        "gust": 3.85
+    },
+    "clouds": {
+        "all": 69
+    },
+    "dt": 1675732079,
+    "sys": {
+        "type": 2,
+        "id": 2077636,
+        "country": "JP",
+        "sunrise": 1675719325,
+        "sunset": 1675757377
+    },
+    "timezone": 32400,
+    "id": 0,
+    "name": "Hirakuechou",
+    "cod": 200
+}
