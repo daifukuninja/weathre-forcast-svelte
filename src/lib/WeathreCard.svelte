@@ -1,9 +1,51 @@
-
-<script>
+<script lang="ts">
     import WeatherIcon from "./WeatherIcon.svelte";
     import K2c from "./K2c.svelte";
     import Unix2Jst from "./Unix2Jst.svelte";
-    
+
+    export let place: string;
+
+    const places = {
+        Hirakue: {
+            lon: 140.3988,
+            lat: 36.402,
+        },
+        Tanbara: {
+            lon: 139.066,
+            lat: 36.7298,
+        },
+        Sapporo: {
+            lon: 141.35,
+            lat: 43.068,
+        },
+        Hitachinaka: {
+            lon: 140.5346,
+            lat: 36.3966,
+        },
+    };
+
+    // STEP01 fetchでパラメータを取得する機能
+    const getForcast = async (_place) => {
+        const serverURL =
+            // `https://api.openweathermap.org/data/2.5/weather?zip=311-4144,JP&appid=${__backend.env.API_KEY}&lang=jp`;
+            `http://localhost:3000/${_place}`;
+        const response = await fetch(serverURL, {
+            method: "GET",
+            mode: "cors",
+            credentials: "omit",
+        });
+        let result = await response.json();
+        let now =
+            new Date(
+                new Date().toLocaleString({ timeZone: "Asia/Tokyo" })
+            ).getTime() / 1000;
+        console.log(now);
+        result.dt = now;
+        return result;
+    };
+
+    let promise = getForcast(place);
+
 </script>
 
 <div class="font-sans mb-10">
