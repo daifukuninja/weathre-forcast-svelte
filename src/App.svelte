@@ -1,9 +1,8 @@
 <script lang="ts">
   import WeatherIcon from "./lib/WeatherIcon.svelte";
-import WeathreCard from "./lib/WeathreCard.svelte"
+  import WeathreCard from "./lib/WeathreCard.svelte";
 
-  let place: string = "hirakue"
-
+  let place: string = "hirakue";
 </script>
 
 <div class="container px-0">
@@ -31,10 +30,10 @@ import WeathreCard from "./lib/WeathreCard.svelte"
           </button>
           <ul class="p-2 bg-base-100">
             <li>
-              <button on:click={() => place = "hirakue"}>茨城県水戸市</button>
+              <button on:click={() => (place = "hirakue")}>茨城県水戸市</button>
             </li>
             <li>
-              <button on:click={() => place = "numata"}>群馬県沼田市</button>
+              <button on:click={() => (place = "numata")}>群馬県沼田市</button>
             </li>
             <li><button>北海道札幌市</button></li>
             <li><button>茨城県ひたちなか市</button></li>
@@ -45,7 +44,7 @@ import WeathreCard from "./lib/WeathreCard.svelte"
   </header>
   <main class="p-4">
     {#key place}
-      <WeathreCard place={place}/>
+      <WeathreCard {place} />
     {/key}
 
     <p class="mb-6">
