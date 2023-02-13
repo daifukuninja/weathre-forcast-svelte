@@ -2,6 +2,11 @@
     import WeatherIcon from "./WeatherIcon.svelte";
     import K2c from "./K2c.svelte";
     import Unix2Jst from "./Unix2Jst.svelte";
+    import dayjs from 'dayjs';
+    import utc from 'dayjs/plugin/utc';
+    import timezone from 'dayjs/plugin/timezone';
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
 
     export let place: string;
 
@@ -25,8 +30,9 @@
     };
 
     // STEP01 fetchでパラメータを取得する機能
-    const getForcast = async (_place) => {
+    const getForcast = async (_place: string) => {
         const serverURL =
+        // TODO: placeと緯度経度からURLを組み立てる処理を検討する
             // `https://api.openweathermap.org/data/2.5/weather?zip=311-4144,JP&appid=${__backend.env.API_KEY}&lang=jp`;
             `http://localhost:3000/${_place}`;
         const response = await fetch(serverURL, {
@@ -35,12 +41,7 @@
             credentials: "omit",
         });
         let result = await response.json();
-        let now =
-            new Date(
-                new Date().toLocaleString({ timeZone: "Asia/Tokyo" })
-            ).getTime() / 1000;
-        console.log(now);
-        result.dt = now;
+        result.dt = dayjs().tz("Asia/Tokyo").valueOf() / 1000;
         return result;
     };
 
