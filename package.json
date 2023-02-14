@@ -26,6 +26,7 @@
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "json-server": "^0.17.1",
-    "vite-plugin-replace": "^0.1.1"
+    "vite-plugin-replace": "^0.1.1",
+    "vitest": "^0.28.5"
   }
 }
