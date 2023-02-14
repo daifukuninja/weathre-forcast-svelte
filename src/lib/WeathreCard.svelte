@@ -5,6 +5,7 @@
     import dayjs from 'dayjs';
     import utc from 'dayjs/plugin/utc';
     import timezone from 'dayjs/plugin/timezone';
+    import Direction from "./Direction.svelte";
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
@@ -65,6 +66,7 @@
                 <p>最低気温: <K2c kelvin={params.main.temp_min} /></p>
                 <p>気圧: {params.main.pressure.toLocaleString()} hPa</p>
                 <p>風速: {params.wind.speed} m/s</p>
+                <p>風向: <Direction deg={params.wind.deg}/></p>
             </div>
         </div>
         <p class="text-sm text-right mt-1">
