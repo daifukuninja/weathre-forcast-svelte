@@ -60,8 +60,11 @@
             <div class="card-body p-0">
                 <h2 class="card-title">{params.name}</h2>
                 <p>気温: <K2c kelvin={params.main.temp} /></p>
+                <p>体感気温: <K2c kelvin={params.main.feels_like} /></p>
                 <p>最高気温: <K2c kelvin={params.main.temp_max} /></p>
                 <p>最低気温: <K2c kelvin={params.main.temp_min} /></p>
+                <p>気圧: {params.main.pressure.toLocaleString()} hPa</p>
+                <p>風速: {params.wind.speed} m/s</p>
             </div>
         </div>
         <p class="text-sm text-right mt-1">

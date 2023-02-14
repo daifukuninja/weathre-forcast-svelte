@@ -3,6 +3,7 @@
 
   let place: string = "hirakue";
   // TODO: 今の天気に表示する項目を増やす
+  // TODO: 風向きをわかりやすく表示するコンポーネントを作る
   // TODO: 今の天気カードをレスポンシブにする
   // TODO: OpenWeatherを使うように戻す
   // TODO: 残りの地点も呼び出せるようにする
