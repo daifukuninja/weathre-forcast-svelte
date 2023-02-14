@@ -1,8 +1,12 @@
 <script lang="ts">
-  import WeatherIcon from "./lib/WeatherIcon.svelte";
   import WeathreCard from "./lib/WeathreCard.svelte";
 
   let place: string = "hirakue";
+  // TODO: 今の天気に表示する項目を増やす
+  // TODO: 今の天気カードをレスポンシブにする
+  // TODO: OpenWeatherを使うように戻す
+  // TODO: 残りの地点も呼び出せるようにする
+  // TODO: 天気予報カードを追加する
 </script>
 
 <div class="container px-0">
