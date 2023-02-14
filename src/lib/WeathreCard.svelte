@@ -6,6 +6,7 @@
     import utc from 'dayjs/plugin/utc';
     import timezone from 'dayjs/plugin/timezone';
     import Direction from "./Direction.svelte";
+    import Unix2JstTime from "./Unix2JstTime.svelte";
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
@@ -67,6 +68,8 @@
                 <p>気圧: {params.main.pressure.toLocaleString()} hPa</p>
                 <p>風速: {params.wind.speed} m/s</p>
                 <p>風向: <Direction deg={params.wind.deg}/></p>
+                <p>日の出: <Unix2JstTime unixtime={params.sys.sunrise}/></p>
+                <p>日の入: <Unix2JstTime unixtime={params.sys.sunset}/></p>
             </div>
         </div>
         <p class="text-sm text-right mt-1">
