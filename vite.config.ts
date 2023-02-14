@@ -27,6 +27,5 @@ export default ({ mode }) => {
         ]
       })
     ],
-    // To access env vars here use process.env.TEST_VAR
   });
 }
