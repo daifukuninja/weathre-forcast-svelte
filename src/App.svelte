@@ -2,14 +2,13 @@
   import WeathreCard from "./lib/WeathreCard.svelte";
 
   let place: string = "hirakue";
-  // TODO: 今の天気カードをレスポンシブにする
   // TODO: OpenWeatherを使うように戻す
   // TODO: 残りの地点も呼び出せるようにする
   // TODO: 天気予報カードを追加する
 </script>
 
 <div class="container px-0">
-  <header class="sticky top-0 navbar bg-base-100 shadow p-4 z-50">
+  <header class="sticky top-0 navbar bg-accent shadow p-4 z-50">
     <div class="flex-1">
       <button class="btn btn-ghost normal-case text-xl"
         >スーパー地元天気予報</button

@@ -4,8 +4,14 @@
 
 # tools
 
-mockサーバの起動
+## mockサーバの起動
 
 ```
 yarn run json-server --watch .sample/mock.json
+```
+
+## unit testの実行
+
+```
+yarn test
 ```
