@@ -55,21 +55,26 @@
     {#await promise}
         <p>...waiting</p>
     {:then params}
-        <div class="card card-side bg-base-300 shadow-xl p-2">
-            <figure>
-                <WeatherIcon icon_id={params.weather[0].icon} />
-            </figure>
-            <div class="card-body p-0">
-                <h2 class="card-title">{params.name}</h2>
-                <p>気温: <K2c kelvin={params.main.temp} /></p>
-                <p>体感気温: <K2c kelvin={params.main.feels_like} /></p>
-                <p>最高気温: <K2c kelvin={params.main.temp_max} /></p>
-                <p>最低気温: <K2c kelvin={params.main.temp_min} /></p>
-                <p>気圧: {params.main.pressure.toLocaleString()} hPa</p>
-                <p>風速: {params.wind.speed} m/s</p>
-                <p>風向: <Direction deg={params.wind.deg}/></p>
-                <p>日の出: <Unix2JstTime unixtime={params.sys.sunrise}/></p>
-                <p>日の入: <Unix2JstTime unixtime={params.sys.sunset}/></p>
+        <div class="flex flex-row rounded-lg bg-primary shadow-xl p-2">
+            <div>
+                <figure class="basis-auto">
+                    <WeatherIcon icon_id={params.weather[0].icon} />
+                </figure>
+    
+            </div>
+            <div class="p-0">
+                <h2 class="md:text-4xl text-2xl text-primary-accent">{params.name}</h2>
+                <div class="md:flex md:text-xl [&>div]:pr-5 text-primary-content">
+                    <div><span class="bg-base-200">気温: <K2c kelvin={params.main.temp} /></span></div>
+                    <div><span class="bg-base-200">体感気温: <K2c kelvin={params.main.feels_like} /></span></div>
+                    <div><span class="bg-base-200">最高気温: <K2c kelvin={params.main.temp_max} /></span></div>
+                    <div><span class="bg-base-200">最低気温: <K2c kelvin={params.main.temp_min} /></span></div>
+                    <div><span class="bg-base-200">気圧: {params.main.pressure.toLocaleString()} hPa</span></div>
+                    <div><span class="bg-base-200">風速: {params.wind.speed} m/s</span></div>
+                    <div><span class="bg-base-200">風向: <Direction deg={params.wind.deg}/></span></div>
+                    <div><span class="bg-base-200">日の出: <Unix2JstTime unixtime={params.sys.sunrise}/></span></div>
+                    <div><span class="bg-base-200">日の入: <Unix2JstTime unixtime={params.sys.sunset}/></span></div>    
+                </div>
             </div>
         </div>
         <p class="text-sm text-right mt-1">
@@ -79,3 +84,6 @@
         <p style="color: red">{error.message}</p>
     {/await}
 </div>
+
+<style>
+</style>
