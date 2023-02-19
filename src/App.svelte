@@ -2,7 +2,9 @@
   import WeathreCard from "./lib/WeathreCard.svelte";
 
   let place: string = "hirakue";
-  // TODO: OpenWeatherを使うように戻す
+  // TODO: hirakueのはずがSugisakiになってしまう(位置を調整)
+  // TODO: GET先のURLからapi-keyがばれてしまう。SSRに移行を検討する
+  // TODO: メニューを右揃えにする
   // TODO: 残りの地点も呼び出せるようにする
   // TODO: 天気予報カードを追加する
 </script>
@@ -37,8 +39,12 @@
             <li>
               <button on:click={() => (place = "numata")}>群馬県沼田市</button>
             </li>
-            <li><button>北海道札幌市</button></li>
-            <li><button>茨城県ひたちなか市</button></li>
+            <li>
+              <button on:click={() => (place = "sapporo")}>北海道札幌市</button>
+            </li>
+            <li>
+              <button on:click={() => (place = "hitachinaka")}>茨城県ひたちなか市</button>
+            </li>
           </ul>
         </li>
       </ul>
