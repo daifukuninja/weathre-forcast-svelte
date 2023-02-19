@@ -2,16 +2,35 @@
 
 メニューから選択する固定地点の地理情報をOpenWeatherAPIに渡して結果を表示する
 
-# tools
+## modules
 
-## mockサーバの起動
+- svelte
+- tailwindcss
+- daisyui
+- dayjs
+- dotenv
+- wrangler
 
-```
+## tools
+
+### mockサーバの起動
+
+```zsh
 yarn run json-server --watch .sample/mock.json
 ```
 
-## unit testの実行
+### unit testの実行
 
+```zsh
+yarn vitest
 ```
-yarn test
+
+workersのテストの場合はそれぞれのルートディレクトリに移動してvitestする
+
+### workersのローカル実行
+
+各workersのディレクトリに移動して下記を実行する
+
+```zsh
+wrangler dev --local
 ```
