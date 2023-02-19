@@ -13,30 +13,28 @@
     export let place: string;
 
     const places = {
-        Hirakue: {
+        hirakue: {
             lon: 140.3988,
             lat: 36.402,
         },
-        Tanbara: {
+        numata: {
             lon: 139.066,
             lat: 36.7298,
         },
-        Sapporo: {
+        sapporo: {
             lon: 141.35,
             lat: 43.068,
         },
-        Hitachinaka: {
+        hitachinaka: {
             lon: 140.5346,
             lat: 36.3966,
         },
     };
 
-    // STEP01 fetchでパラメータを取得する機能
     const getForcast = async (_place: string) => {
-        const serverURL =
-        // TODO: placeと緯度経度からURLを組み立てる処理を検討する
-            // `https://api.openweathermap.org/data/2.5/weather?zip=311-4144,JP&appid=${__backend.env.API_KEY}&lang=jp`;
-            `http://localhost:3000/${_place}`;
+        let lon = places[_place].lon;
+        let lat = places[_place].lat;
+        const serverURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${__backend.env.API_KEY}&lang=jp`;
         const response = await fetch(serverURL, {
             method: "GET",
             mode: "cors",
