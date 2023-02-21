@@ -1,3 +1,0 @@
-name = "get_current_weather"
-main = "src/index.ts"
-compatibility_date = "2023-02-19"
