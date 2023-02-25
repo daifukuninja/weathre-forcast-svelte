@@ -1,3 +1,8 @@
 name = "get_weather"
 main = "src/index.ts"
 compatibility_date = "2023-02-20"
+
+vars = { ENVIRONMENT = "dev" }
+
+[env.production]
+vars = { ENVIRONMENT = "production" }

@@ -1,7 +1,13 @@
 import { Hono } from 'hono'
 import { basicAuth } from 'hono/basic-auth'
 
-const app = new Hono()
+export type Env = {
+	ENVIRONMENT: string
+	USER: string
+	PASSWORD: string
+}
+
+const app = new Hono<{Bindings: Env}>();
 
 const places = {
 	hirakue: {
@@ -23,16 +29,19 @@ const places = {
 };
 
 app.use(
-  '/api/*',
-  basicAuth({
-    username: 'admin',
-    password: 'weather',
-  })
+	'/api/*',
+	async (c, next) => {
+	const handler = basicAuth({
+		username: c.env.USER,
+		password: c.env.PASSWORD,
+	})
+	await handler(c, next)
+	}
 )
 
 app.get('/api/now/:place', (c) => {
 	const place = c.req.param("place");
-	return c.text(`called, ${place}`);
+	return c.text(`called, ${place}(${c.env.ENVIRONMENT})`);
 })
 
 export default app;
