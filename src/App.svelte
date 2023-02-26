@@ -10,14 +10,14 @@
 </script>
 
 <div class="container px-0">
-  <header class="sticky top-0 navbar bg-accent shadow p-4 z-50">
+  <header class="sticky top-0 navbar bg-secondary shadow p-4 z-50">
     <div class="flex-1">
-      <button class="btn btn-ghost normal-case text-xl"
+      <button class="btn btn-ghost normal-case text-xl text-secondary-content"
         >スーパー地元天気予報</button
       >
     </div>
     <div class="flex-none">
-      <ul class="menu menu-horizontal px-1">
+      <ul class="menu menu-horizontal px-1 text-secondary-content">
         <li>
           <button>
             Select
