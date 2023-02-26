@@ -1,5 +1,5 @@
 <script lang="ts">
-  import WeathreCard from "./lib/WeathreCard.svelte";
+  import WeatherCard from "./lib/WeatherCard.svelte";
 
   let place: string = "hirakue";
   // TODO: hirakueのはずがSugisakiになってしまう(位置を調整)
@@ -52,7 +52,7 @@
   </header>
   <main class="p-4">
     {#key place}
-      <WeathreCard {place} />
+      <WeatherCard {place} />
     {/key}
 
     <p class="mb-6">
