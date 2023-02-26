@@ -19,6 +19,14 @@
 yarn run json-server --watch .sample/mock.json
 ```
 
+### ローカルで実行
+
+```zsh
+yarn dev
+```
+
+デフォルトはhttp://localhost:5173
+
 ### unit testの実行
 
 ```zsh
