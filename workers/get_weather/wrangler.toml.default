@@ -1,0 +1,15 @@
+name = "get_weather"
+main = "src/index.ts"
+compatibility_date = "2023-02-20"
+
+kv_namespaces = [
+    { binding = "KV_WEATHER_CACHE", id = "", preview_id = "" }
+]
+
+[env.production]
+kv_namespaces = [
+    { binding = "KV_WEATHER_CACHE", id = "", preview_id = "" }
+]
+[env.production.vars]
+ENVIRONMENT = "production"
+USER = ""
