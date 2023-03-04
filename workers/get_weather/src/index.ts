@@ -98,7 +98,7 @@ app.get('/api/now/:place', async (c) => {
 			headers: cachedHeader,
 		});
 	}
-	
+
 	const response = await fetch(serviceURL, {
 		method: "GET",
 	});
@@ -107,21 +107,6 @@ app.get('/api/now/:place', async (c) => {
 
 	const result = await response.json();
 	return c.json(result);
-})
-
-app.get('/api/cache/:place', async (c) => {
-	const place = c.req.param("place");
-	const cachedHeader = await c.env.KV_WEATHER_CACHE.get(`${place}:HEADER`, { type: "json", });
-	const cachedBody = await c.env.KV_WEATHER_CACHE.get(`${place}:BODY`);
-	if (cachedHeader && cachedBody) {
-		return new Response(cachedBody, {
-			headers: cachedHeader,
-		});
-	} else {
-		return new Response(null, {
-			status: 404,
-		})
-	}
 })
 
 export default app;
