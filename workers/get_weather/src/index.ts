@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
 import { basicAuth } from 'hono/basic-auth'
 
 export type Env = {
@@ -78,12 +79,29 @@ const putResponse2Cache = async (KV: KVNamespace, place: string, response: Respo
 
 app.use(
 	'/api/*',
+	cors({
+		origin: 'http://localhost:5173',
+		// origin: '*',
+		allowHeaders: ['authorization', 'User-Agent','Keep-Alive','Content-Type','accept','origin'],
+		allowMethods: [
+			'POST', 
+			'GET', 
+			'OPTIONS',
+		],
+		exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
+		maxAge: 600,
+		credentials: true,
+	})
+);
+
+app.use(
+	'/api/*',
 	async (c, next) => {
 		const handler = basicAuth({
 			username: c.env.USER,
 			password: c.env.PASSWORD,
 		})
-		await handler(c, next)
+		await handler(c, next);
 	}
 )
 
@@ -95,17 +113,17 @@ app.get('/api/now/:place', async (c) => {
 	const cachedBody = await c.env.KV_WEATHER_CACHE.get(`${place}:BODY`);
 	if (cachedHeader && cachedBody) {
 		return new Response(cachedBody, {
-			headers: cachedHeader,
+			headers: cachedHeader as Headers,
 		});
 	}
 
-	const response = await fetch(serviceURL, {
+	const apiResponse = await fetch(serviceURL, {
 		method: "GET",
 	});
 
-	await putResponse2Cache(c.env.KV_WEATHER_CACHE, place, response, c.env.CACHE_EXPIRATION_TTL);
+	await putResponse2Cache(c.env.KV_WEATHER_CACHE, place, apiResponse, c.env.CACHE_EXPIRATION_TTL);
 
-	const result = await response.json();
+	const result = await apiResponse.json();
 	return c.json(result);
 })
 
