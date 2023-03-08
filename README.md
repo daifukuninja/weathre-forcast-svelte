@@ -42,3 +42,25 @@ workersのテストの場合はそれぞれのルートディレクトリに移�
 ```zsh
 wrangler dev --local
 ```
+
+### サイトのbuild
+
+`weather-forcast`直下でコマンドを実行する
+
+```zsh
+yarn build
+```
+
+`./dist`下にビルドされたリソースが作成される
+
+## issues
+
+### workers
+
+- 天気予報の機能を追加する
+- corsのoriginをenvで切り替えられるようにする
+
+### svelte
+
+- localと本番のworkersエンドポイントをenvとかで切り替えられるようにする
+- 天気予報表示の機能を追加する
