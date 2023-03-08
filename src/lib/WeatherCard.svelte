@@ -13,10 +13,9 @@
 
     export let place: string;
 
-    const getForcast = async (_place: string) => {
-
+    const getWeatherNow = async (_place: string) => {
         // const serverURL = `https://get_weather-production.api-contribe.workers.dev/api/now/${_place}`;
-        const serverURL = `http://localhost:8787/api/now/${_place}`;
+        const serverURL = `${API_URL}${_place}`;
 
         return new Promise<WeatherNow>(function (resolve, reject) {
             // Do the usual XHR stuff
@@ -52,14 +51,16 @@
 
     let API_USER = import.meta.env.VITE_WORKER_USER;
     let API_PASS = import.meta.env.VITE_WORKER_PASS;
+    let API_URL = import.meta.env.VITE_API_NOW_URL;
 
-    let promise = getForcast(place);
-
+    let promise = getWeatherNow(place);
 </script>
 
 <div class="font-sans mb-10">
     {#await promise}
-        <p>...waiting</p>
+        <div class="flex justify-center my-20">
+            <div class="animate-spin h-8 w-8 bg-blue-300 rounded-xl" />
+        </div>
     {:then params}
         <div class="flex flex-row rounded-lg bg-primary shadow-xl p-2">
             <div>
