@@ -7,7 +7,7 @@
     import timezone from "dayjs/plugin/timezone";
     import Direction from "./Direction.svelte";
     import Unix2JstTime from "./Unix2JstTime.svelte";
-    import type { WeatherNow } from "../scripts/interface";
+    import type { WeatherNow } from "../scripts/interface_now";
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
