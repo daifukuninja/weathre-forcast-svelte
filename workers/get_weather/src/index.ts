@@ -11,6 +11,8 @@ export type Env = {
 	CACHE_EXPIRATION_TTL: number	// seconds.
 }
 
+type API_TYPE = "NOW" | "FORCAST"
+
 const app = new Hono<{ Bindings: Env }>();
 
 const geometory = {
@@ -52,7 +54,27 @@ const getNowWeatherEndpoint = (place: string, key: string) => {
 	}
 }
 
-const putResponse2Cache = async (KV: KVNamespace, place: string, response: Response, ttl: number) => {
+const getForcastWeatherEndpoint = (place: string, key: string) => {
+	switch (place) {
+		case 'hirakue':
+			return `https://api.openweathermap.org/data/2.5/forecast?zip=311-4144,JP&appid=${key}&lang=jp`
+
+		case 'tanbara':
+			return `https://api.openweathermap.org/data/2.5/forecast?lon=${geometory.tanbara.lon}&lat=${geometory.tanbara.lat}&appid=${key}&lang=jp`;
+
+		case 'sapporo':
+			return `https://api.openweathermap.org/data/2.5/forecast?lon=${geometory.sapporo.lon}&lat=${geometory.sapporo.lat}&appid=${key}&lang=jp`;
+
+		case 'hitachinaka':
+			return `https://api.openweathermap.org/data/2.5/forecast?lon=${geometory.hitachinaka.lon}&lat=${geometory.hitachinaka.lat}&appid=${key}&lang=jp`;
+
+		default:
+			// hirakue
+			return `https://api.openweathermap.org/data/2.5/forecast?zip=311-4144,JP&appid=${key}&lang=jp`
+	}
+}
+
+const putResponse2Cache = async (env: Env, place: string, type: API_TYPE, response: Response) => {
 	let cache = response.clone();
 	cache = new Response(cache.body, cache);
 	cache.headers.append("x-from-cache", "true");
@@ -67,11 +89,11 @@ const putResponse2Cache = async (KV: KVNamespace, place: string, response: Respo
 		{}
 	);
 	let funcs = [
-		await KV.put(`${place}:HEADER`, JSON.stringify(headerObj), { expirationTtl: ttl }),
+		await env.KV_WEATHER_CACHE.put(`${place}:${type}:HEADER`, JSON.stringify(headerObj), { expirationTtl: env.CACHE_EXPIRATION_TTL }),
 	]
 	if (cache.body != null) {
 		funcs.push(
-			await KV.put(`${place}:BODY`, cache.body, { expirationTtl: ttl })
+			await env.KV_WEATHER_CACHE.put(`${place}:${type}:BODY`, cache.body, { expirationTtl: env.CACHE_EXPIRATION_TTL })
 		)
 	}
 	return Promise.all(funcs)
@@ -79,19 +101,22 @@ const putResponse2Cache = async (KV: KVNamespace, place: string, response: Respo
 
 app.use(
 	'/api/*',
-	cors({
-		origin: 'http://localhost:5173',
-		// origin: '*',
-		allowHeaders: ['authorization', 'User-Agent','Keep-Alive','Content-Type','accept','origin'],
-		allowMethods: [
-			'POST', 
-			'GET', 
-			'OPTIONS',
-		],
-		exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
-		maxAge: 600,
-		credentials: true,
-	})
+	async (c, next) => {
+		const handler = cors({
+			// origin: 'http://localhost:5173',
+			origin: '*',
+			allowHeaders: ['authorization', 'User-Agent','Keep-Alive','Content-Type','accept','origin'],
+			allowMethods: [
+				'POST', 
+				'GET', 
+				'OPTIONS',
+			],
+			exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
+			maxAge: 600,
+			credentials: true,
+		})
+		await handler(c, next);
+	}
 );
 
 app.use(
@@ -107,10 +132,11 @@ app.use(
 
 app.get('/api/now/:place', async (c) => {
 	const place = c.req.param("place");
+	const apiType: API_TYPE = "NOW";
 	const serviceURL = getNowWeatherEndpoint(place, c.env.API_KEY);
 
-	const cachedHeader = await c.env.KV_WEATHER_CACHE.get(`${place}:HEADER`, { type: "json", });
-	const cachedBody = await c.env.KV_WEATHER_CACHE.get(`${place}:BODY`);
+	const cachedHeader = await c.env.KV_WEATHER_CACHE.get(`${place}:${apiType}:HEADER`, { type: "json", });
+	const cachedBody = await c.env.KV_WEATHER_CACHE.get(`${place}:${apiType}:BODY`);
 	if (cachedHeader && cachedBody) {
 		return new Response(cachedBody, {
 			headers: cachedHeader as Headers,
@@ -121,7 +147,30 @@ app.get('/api/now/:place', async (c) => {
 		method: "GET",
 	});
 
-	await putResponse2Cache(c.env.KV_WEATHER_CACHE, place, apiResponse, c.env.CACHE_EXPIRATION_TTL);
+	await putResponse2Cache(c.env, place, apiType, apiResponse);
+
+	const result = await apiResponse.json();
+	return c.json(result);
+})
+
+app.get('/api/forcast/:place', async (c) => {
+	const place = c.req.param("place");
+	const apiType: API_TYPE = "FORCAST";
+	const serviceURL = getForcastWeatherEndpoint(place, c.env.API_KEY);
+
+	const cachedHeader = await c.env.KV_WEATHER_CACHE.get(`${place}:${apiType}:HEADER`, { type: "json", });
+	const cachedBody = await c.env.KV_WEATHER_CACHE.get(`${place}:${apiType}:BODY`);
+	if (cachedHeader && cachedBody) {
+		return new Response(cachedBody, {
+			headers: cachedHeader as Headers,
+		});
+	}
+
+	const apiResponse = await fetch(serviceURL, {
+		method: "GET",
+	});
+
+	await putResponse2Cache(c.env, place, apiType, apiResponse);
 
 	const result = await apiResponse.json();
 	return c.json(result);
