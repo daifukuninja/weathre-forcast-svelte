@@ -7,52 +7,61 @@
     import timezone from "dayjs/plugin/timezone";
     import Direction from "./Direction.svelte";
     import Unix2JstTime from "./Unix2JstTime.svelte";
+    import type { WeatherNow } from "../scripts/interface";
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
     export let place: string;
 
-    const places = {
-        hirakue: {
-            lon: 140.3988,
-            lat: 36.402,
-        },
-        numata: {
-            lon: 139.066,
-            lat: 36.7298,
-        },
-        sapporo: {
-            lon: 141.35,
-            lat: 43.068,
-        },
-        hitachinaka: {
-            lon: 140.5346,
-            lat: 36.3966,
-        },
+    const get = (serverURL: string) => {
+        // Return a new promise.
+        return new Promise<WeatherNow>(function (resolve, reject) {
+            // Do the usual XHR stuff
+            // const auth = window.btoa("contriBe:qwertyui");
+            const auth = window.btoa(`${API_USER}:${API_PASS}`);
+
+            var req = new XMLHttpRequest();
+            req.open("GET", serverURL);
+            req.setRequestHeader("Authorization", "Basic " + auth);
+
+            req.onload = function () {
+                // This is called even on 404 etc
+                // so check the status
+                if (req.status == 200) {
+                    // Resolve the promise with the response text
+                    resolve(JSON.parse(req.responseText));
+                } else {
+                    // Otherwise reject with the status text
+                    // which will hopefully be a meaningful error
+                    reject(Error(req.statusText));
+                }
+            };
+
+            // Handle network errors
+            req.onerror = function () {
+                reject(Error("Network Error"));
+            };
+
+            // Make the request
+            req.send();
+        });
+    }
+    const getForcast = async (_place: string) => {
+
+        // const serverURL = `https://get_weather-production.api-contribe.workers.dev/api/now/${_place}`;
+        const serverURL = `http://localhost:8787/api/now/${_place}`;
+
+        return get(serverURL);
     };
 
-    const getForcast = async (_place: string) => {
-        let lon = places[_place].lon;
-        let lat = places[_place].lat;
-        const serverURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${__backend.env.API_KEY}&lang=jp`;
-        const response = await fetch(serverURL, {
-            method: "GET",
-            mode: "cors",
-            credentials: "omit",
-        });
-        let result = await response.json();
-        result.dt = dayjs().tz("Asia/Tokyo").valueOf() / 1000;
-        return result;
-    };
+    let API_USER = import.meta.env.VITE_WORKER_USER;
+    let API_PASS = import.meta.env.VITE_WORKER_PASS;
 
     let promise = getForcast(place);
 
-    let callLog = () => {
-        console.log("test");
-    }
 </script>
 
-<div on:load={callLog} class="font-sans mb-10">
+<div class="font-sans mb-10">
     {#await promise}
         <p>...waiting</p>
     {:then params}
