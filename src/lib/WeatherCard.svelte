@@ -13,8 +13,11 @@
 
     export let place: string;
 
-    const get = (serverURL: string) => {
-        // Return a new promise.
+    const getForcast = async (_place: string) => {
+
+        // const serverURL = `https://get_weather-production.api-contribe.workers.dev/api/now/${_place}`;
+        const serverURL = `http://localhost:8787/api/now/${_place}`;
+
         return new Promise<WeatherNow>(function (resolve, reject) {
             // Do the usual XHR stuff
             // const auth = window.btoa("contriBe:qwertyui");
@@ -45,13 +48,6 @@
             // Make the request
             req.send();
         });
-    }
-    const getForcast = async (_place: string) => {
-
-        // const serverURL = `https://get_weather-production.api-contribe.workers.dev/api/now/${_place}`;
-        const serverURL = `http://localhost:8787/api/now/${_place}`;
-
-        return get(serverURL);
     };
 
     let API_USER = import.meta.env.VITE_WORKER_USER;
