@@ -14,7 +14,6 @@
     export let place: string;
 
     const getWeatherNow = async (_place: string) => {
-        // const serverURL = `https://get_weather-production.api-contribe.workers.dev/api/now/${_place}`;
         const serverURL = `${API_URL}${_place}`;
 
         return new Promise<WeatherNow>(function (resolve, reject) {
