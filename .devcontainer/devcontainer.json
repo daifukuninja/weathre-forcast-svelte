@@ -30,6 +30,7 @@
 		"eamodio.gitlens",
 		"ms-vscode.vscode-typescript-next",
 		"pmneo.tsimporter",
-		"kakumei.ts-debug"
+		"kakumei.ts-debug",
+		"humao.rest-client"
 	]
 }
