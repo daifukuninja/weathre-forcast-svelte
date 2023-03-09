@@ -99,36 +99,35 @@ const putResponse2Cache = async (env: Env, place: string, type: API_TYPE, respon
 	return Promise.all(funcs)
 }
 
+
 app.use(
 	'/api/*',
-	async (c, next) => {
-		const handler = cors({
-			// origin: 'http://localhost:5173',
-			origin: '*',
-			allowHeaders: ['authorization', 'User-Agent','Keep-Alive','Content-Type','accept','origin'],
-			allowMethods: [
-				'POST', 
-				'GET', 
-				'OPTIONS',
-			],
-			exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
-			maxAge: 600,
-			credentials: true,
-		})
-		await handler(c, next);
-	}
+	cors({
+		origin: '*',
+		allowHeaders: ['authorization', 'User-Agent', 'Keep-Alive', 'Content-Type', 'accept', 'origin'],
+		allowMethods: [
+			'POST',
+			'GET',
+			'OPTIONS',
+		],
+		exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
+		maxAge: 600,
+		credentials: true,
+	})
 );
 
 app.use(
 	'/api/*',
 	async (c, next) => {
-		const handler = basicAuth({
+		const auth = basicAuth({
 			username: c.env.USER,
 			password: c.env.PASSWORD,
 		})
-		await handler(c, next);
+		await auth(c, next);
 	}
 )
+
+
 
 app.get('/api/now/:place', async (c) => {
 	const place = c.req.param("place");
