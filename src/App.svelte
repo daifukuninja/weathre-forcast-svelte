@@ -5,13 +5,6 @@
 
   let place: string = "hirakue";
 
-  const handleClick = () => {
-    const elem = document.activeElement as HTMLElement;
-    if (elem) {
-      elem?.blur();
-    }
-  };
-
 </script>
 
 <div class="container px-0">

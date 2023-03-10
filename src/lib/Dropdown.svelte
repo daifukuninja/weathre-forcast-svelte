@@ -4,8 +4,8 @@
 
     export let place;
 
-    let show = false; // menu state
-    let menu = null; // menu wrapper DOM reference
+    let show = false;
+    let menu = null;
 
     onMount(() => {
         const handleOutsideClick = (event) => {
@@ -20,11 +20,9 @@
             }
         };
 
-        // add events when element is added to the DOM
         document.addEventListener("click", handleOutsideClick, false);
         document.addEventListener("keyup", handleEscape, false);
 
-        // remove events when element is removed from the DOM
         return () => {
             document.removeEventListener("click", handleOutsideClick, false);
             document.removeEventListener("keyup", handleEscape, false);
