@@ -57,7 +57,7 @@
             <div class="animate-spin h-8 w-8 bg-blue-300 rounded-xl" />
         </div>
     {:then params}
-        <div class="grid grid-cols-4 gap-4">
+        <div class="grid grid-cols-8 gap-4 text-center">
             {#each params.list as row, i}
                 <ForcastRow {row} />
             {/each}
