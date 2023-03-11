@@ -3,7 +3,7 @@
     import utc from "dayjs/plugin/utc";
     import timezone from "dayjs/plugin/timezone";
     import type { WeatherForcast } from "../scripts/interface_forcast";
-    import ForcastRow from "./ForcastRow.svelte";
+    import ForcastCell from "./ForcastCell.svelte";
     import { getWeatherAsync } from "../scripts/get_weather";
     dayjs.extend(utc);
     dayjs.extend(timezone);
@@ -23,7 +23,7 @@
     {:then params}
         <div class="grid grid-cols-8 gap-4 text-center">
             {#each params.list as row, i}
-                <ForcastRow {row} />
+                <ForcastCell {row} />
             {/each}
         </div>
     {:catch error}
