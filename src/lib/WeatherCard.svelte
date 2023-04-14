@@ -27,9 +27,7 @@
     {:then params}
         <div class="flex flex-row rounded-lg bg-primary shadow-xl p-2">
             <div>
-                <figure class="basis-auto">
-                    <WeatherIcon icon_id={params.weather[0].icon} />
-                </figure>
+                <WeatherIcon icon_id={params.weather[0].icon} />
             </div>
             <div class="p-0">
                 <h2 class="md:text-4xl text-2xl text-primary-content">

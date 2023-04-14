@@ -8,7 +8,7 @@
 </script>
 
 <div>
-    <div><WeatherIcon icon_id={row.weather[0].icon} /></div>
+    <WeatherIcon icon_id={row.weather[0].icon} />
     <div><Unix2JstHhMm unixtime={row.dt} /></div>
     <div><K2c kelvin={row.main.temp} /></div>
     <Arrow angle={row.wind.deg} speed={row.wind.speed} />
