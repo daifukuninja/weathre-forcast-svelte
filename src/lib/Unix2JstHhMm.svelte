@@ -8,12 +8,5 @@
     let s = dt.getSeconds().toString().padStart( 2, '0');
     let jst_time = `${m}/${d} ${h}:${mm}`
 </script>
-
-<div>{`${m}/${d}`}</div>
-<div>{`${h}:${mm}`}</div>
-
-<style>
-    div {
-        font-size: small;
-    }
-</style>
+<div class="text-xs md:text-base">{`${m}/${d}`}</div>
+<div class="text-xs md:text-base">{`${h}:${mm}`}</div>    
