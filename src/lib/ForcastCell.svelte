@@ -10,12 +10,6 @@
 <div>
     <div><WeatherIcon icon_id={row.weather[0].icon} /></div>
     <div><Unix2JstHhMm unixtime={row.dt} /></div>
-    <div class="temp"><K2c kelvin={row.main.temp} /></div>
+    <div><K2c kelvin={row.main.temp} /></div>
     <Arrow angle={row.wind.deg} speed={row.wind.speed} />
 </div>
-
-<style>
-    .temp {
-        font-size: small;
-    }
-</style>
