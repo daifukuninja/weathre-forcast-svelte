@@ -4,4 +4,4 @@
   celsius = Math.floor(celsius*10)/10
 </script>
 
-<span>{celsius}℃</span>
+<span class="text-xs md:text-base">{celsius}℃</span>
