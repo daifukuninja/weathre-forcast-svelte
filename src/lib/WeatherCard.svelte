@@ -1,6 +1,6 @@
 <script lang="ts">
     import WeatherIcon from "./WeatherIcon.svelte";
-    import K2c from "./K2c.svelte";
+    import K2c from "./K2c/K2c.svelte";
     import Unix2Jst from "./Unix2Jst.svelte";
     import dayjs from "dayjs";
     import utc from "dayjs/plugin/utc";
